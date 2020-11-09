@@ -29,11 +29,13 @@ public class WebSocketInterceptor implements HandshakeInterceptor {
             HttpServletRequest httpRequest = servletRequest.getServletRequest();
         }
         logger.info("beforeHandshake完成");
+        System.out.println("before handshake done");
         return true;
     }
 
     @Override
     public void afterHandshake(ServerHttpRequest arg0, ServerHttpResponse arg1, WebSocketHandler arg2, Exception arg3) {
         logger.info("afterHandshake完成");
+        System.out.println("after handshake done");
     }
 }
