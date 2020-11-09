@@ -24,15 +24,14 @@ class SocketWrap {
     public onopen : Function = null;
 
     private onSocketOpen():void {
-        this.send("CONNECT\x0Aaccept-version:1.1,1.0\x0Aheart-beat:10000,10000\x0A\x0A\x00")
-        // this.send("ok\x0Ab:b\x0A\x0A\x00")
-
+        console.log("webSocket连接")
         if(this.onopen) {
             this.onopen();
         }
     }
 
     private onSocketClose():void {
+        console.log("webSocket关闭")
         if(this.onclose) {
             this.onclose();
         }
@@ -51,7 +50,7 @@ class SocketWrap {
         this.webSocket.type = egret.WebSocket.TYPE_STRING
         var msg = this.webSocket.readUTF();    
         this.webSocket.type = egret.WebSocket.TYPE_BINARY
-        console.log("收到数据：" + msg);
+
         if(this.onmessage) {
             this.onmessage({data: msg})
         }
@@ -83,8 +82,6 @@ class SocketWrap {
     }
 
     public send(payload: string) {
-        console.log("send:" + payload)
-        // this.webSocket.writeUTF(payload)
         this.webSocket.writeBytes(new egret.ByteArray(this.stringToByte(payload)))
         this.webSocket.flush()
     }

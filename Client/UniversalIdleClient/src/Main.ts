@@ -90,12 +90,12 @@ class Main extends eui.Component {
         ws.connectByUrl(url)
 
         client.connect({}, function (frame) {
-            // setConnected(true);
             console.log('Connected:' + frame);
+            
             client.subscribe('/topic/say', function (response) {
                 console.log(JSON.parse(response.body).responseMessage);
             });
-            // 另外再注册一下定时任务接受
+
             client.subscribe('/topic/callback', function (response) {
                 console.log(response.body);
             });
