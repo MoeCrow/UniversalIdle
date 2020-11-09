@@ -31,5 +31,10 @@
       "name": "stomp",
       "path": "./libs/stomp"
     }
-  ]
+  ],
+  "eui": {
+    "exmlRoot": [
+      "resource/eui_skins"
+    ]
+  }
 }
