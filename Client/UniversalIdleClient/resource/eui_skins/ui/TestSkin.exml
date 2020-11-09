@@ -1,0 +1,6 @@
+<?xml version='1.0' encoding='utf-8'?>
+<e:Skin class="TestSkin"
+	 width="1136"
+	height="640" xmlns:e="http://ns.egret.com/eui">
+	<e:Button label="Button" x="384" y="156"/>
+</e:Skin>
