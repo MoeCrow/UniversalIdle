@@ -36,5 +36,11 @@
     "exmlRoot": [
       "resource/eui_skins"
     ]
+  },
+  "targets": {
+    "android": {
+      "appname": "UniversalIdle",
+      "packagename": "com.moecrow"
+    }
   }
 }

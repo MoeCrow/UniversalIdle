@@ -42,7 +42,7 @@ declare module skins{
 	class ToggleSwitchSkin extends eui.Skin{
 	}
 }
-declare class TestSkin extends eui.Skin{
+declare class MainUiSkin extends eui.Skin{
 }
 declare module skins{
 	class VScrollBarSkin extends eui.Skin{

@@ -63,9 +63,9 @@ class Main extends eui.Component {
     private async runGame() {
         await this.loadResource()
 
-        this.skinName = "TestSkin";
+        this.skinName = "MainUiSkin";
 
-        var client = Stomp.client("ws://localhost:8080/simple", null)
+        var client = Stomp.client("ws://192.168.0.134:8080/simple", null)
 
 
         client.connect({}, function (frame) {

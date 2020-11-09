@@ -1,0 +1,15 @@
+<?xml version='1.0' encoding='utf-8'?>
+<e:Skin class="MainUiSkin"
+	height="1136" xmlns:e="http://ns.egret.com/eui" width="640">
+	<e:Group width="640" height="100" bottom="1" horizontalCenter="0">
+		<e:Button label="Hme" y="25" x="70"/>
+
+        <e:Button label="Inv" y="25" x="170"/>
+
+        <e:Button label="Btl" y="25" x="270"/>
+
+        <e:Button label="Chr" y="25" x="370"/>
+
+        <e:Button label="Sqd" y="25" x="470"/>
+	</e:Group>
+</e:Skin>
