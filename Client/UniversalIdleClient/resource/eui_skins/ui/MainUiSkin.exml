@@ -1,15 +1,31 @@
 <?xml version='1.0' encoding='utf-8'?>
 <e:Skin class="MainUiSkin"
 	height="1136" xmlns:e="http://ns.egret.com/eui" width="640">
-	<e:Group width="640" height="100" bottom="1" horizontalCenter="0">
-		<e:Button label="Hme" y="25" x="70"/>
+	<e:Group height="100" bottom="0" horizontalCenter="0" left="0" right="0">
+		<e:Button id="btn_home" label="Hme" y="25" x="70"/>
 
-        <e:Button label="Inv" y="25" x="170"/>
+        <e:Button id="btn_inventory" label="Inv" y="25" x="170"/>
 
-        <e:Button label="Btl" y="25" x="270"/>
+        <e:Button id="btn_battle" label="Btl" y="25" x="270"/>
 
-        <e:Button label="Chr" y="25" x="370"/>
+        <e:Button id="btn_character" label="Chr" y="25" x="370"/>
 
-        <e:Button label="Sqd" y="25" x="470"/>
+        <e:Button id="btn_squard" label="Sqd" y="25" x="470"/>
 	</e:Group>
+	<e:Group id="grp_main" anchorOffsetX="0" anchorOffsetY="0" horizontalCenter="0" bottom="100" top="300" left="0" right="0">
+		<e:ViewStack id="viewstack" width="100%" height="100%" x="0" y="0">
+			<e:Group width="100%" height="100%" name="Group">
+				<e:Component skinName="TestASkin" scaleX="1" scaleY="1" width="100%" x="0" height="100%" y="0"/>
+			</e:Group>
+			<e:Group width="200" height="200" x="356.0000000000001" y="211" scaleX="1" scaleY="1">
+				<e:Button label="Button" x="-160.0000000000001" y="45" scaleX="1" scaleY="1"/>
+			</e:Group>
+			<e:Button label="Button" x="382" y="393"/>
+			<e:Group width="200" height="200" x="133" y="371.0000000000001" scaleX="1" scaleY="1"/>
+		</e:ViewStack>
+		<e:layout>
+			<e:BasicLayout/>
+		</e:layout>
+	</e:Group>
+	<e:Group id="grp_top" height="300" horizontalCenter="0" top="0" left="0" right="0"/>
 </e:Skin>

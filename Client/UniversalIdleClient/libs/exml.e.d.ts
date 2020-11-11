@@ -44,6 +44,8 @@ declare module skins{
 }
 declare class MainUiSkin extends eui.Skin{
 }
+declare class TestASkin extends eui.Skin{
+}
 declare module skins{
 	class VScrollBarSkin extends eui.Skin{
 	}

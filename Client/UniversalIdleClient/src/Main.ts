@@ -59,29 +59,12 @@ class Main extends eui.Component {
             console.log(e);
         })
     }
-    private onGetComplete(event:egret.Event):void {
-        var request = <egret.HttpRequest>event.currentTarget;
-        console.log("get data : ",request.response);
-        var responseLabel = new egret.TextField();
-        responseLabel.size = 18;
-        responseLabel.text = "GET response: \n" + request.response.substring(0, 50) + "...";
-        this.addChild(responseLabel);
-        responseLabel.x = 50;
-        responseLabel.y = 70;
-    }
+
     private async runGame() {
         await this.loadResource()
 
-        this.skinName = "MainUiSkin";
-
-        var request = new egret.HttpRequest();
-        request.responseType = egret.HttpResponseType.TEXT;
-        request.open("http://httpbin.org/get",egret.HttpMethod.GET);
-        request.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-        request.addEventListener(egret.Event.COMPLETE,this.onGetComplete,this);
-        request.send();
-        console.log("http send")
-
+        // this.skinName = "MainUiSkin";
+        this.addChild(new MainUi());
 
         // var client = Stomp.client("ws://192.168.0.134:8080/simple", null)
         var ws = new egret.WebSocket()
