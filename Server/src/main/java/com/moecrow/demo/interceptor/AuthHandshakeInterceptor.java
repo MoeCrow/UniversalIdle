@@ -22,7 +22,8 @@ import java.util.Map;
 @Component
 public class AuthHandshakeInterceptor implements HandshakeInterceptor {
     @Override
-    public boolean beforeHandshake(ServerHttpRequest serverHttpRequest, ServerHttpResponse serverHttpResponse, WebSocketHandler webSocketHandler, Map<String, Object> map) throws Exception {
+    public boolean beforeHandshake(ServerHttpRequest serverHttpRequest, ServerHttpResponse serverHttpResponse,
+                                   WebSocketHandler webSocketHandler, Map<String, Object> attributes) throws Exception {
         //获取参数
         String token = SpringContextUtils.getRequest().getParameter("token");
 
@@ -30,19 +31,17 @@ public class AuthHandshakeInterceptor implements HandshakeInterceptor {
             return false;
         }
 
-        log.info("auth:" + token);
-
         //todo login check
-        User loginUser = User.builder().id(1).userName(token).build();
+        User user = User.builder().id(1).userName(token).build();
+        attributes.put("user", user);
 
-        if(loginUser != null){
-            log.info(MessageFormat.format("用户{0}请求建立WebSocket连接", loginUser.getUserName()));
+        if(user != null){
+            log.info(MessageFormat.format("用户{0}请求建立WebSocket连接", user.getUserName()));
             return true;
         }else{
             log.severe("未登录系统，禁止连接WebSocket");
             return false;
         }
-
     }
 
     @Override

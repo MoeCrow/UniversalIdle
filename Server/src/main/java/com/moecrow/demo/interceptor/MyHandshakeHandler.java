@@ -25,14 +25,10 @@ public class MyHandshakeHandler extends DefaultHandshakeHandler {
 
     @Override
     protected Principal determineUser(ServerHttpRequest request, WebSocketHandler wsHandler, Map<String, Object> attributes) {
-        //获取参数
-        String token = SpringContextUtils.getRequest().getParameter("token");
-
-        log.info("handshake:" + token);
-
-        if(StringUtils.isNotBlank(token)){
-            log.info(MessageFormat.format("WebSocket连接开始创建Principal，用户：{0}", token));
-            return new MyPrincipal(token);
+        User user = (User) attributes.get("user");
+        if(user != null){
+            log.info(MessageFormat.format("WebSocket连接开始创建Principal，用户：{0}", user.getUserName()));
+            return new MyPrincipal(user.getUserName());
         }else{
             log.severe("未登录系统，禁止连接WebSocket");
             return null;

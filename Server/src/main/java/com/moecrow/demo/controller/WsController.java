@@ -2,13 +2,17 @@ package com.moecrow.demo.controller;
 
 import com.moecrow.demo.model.RequestMessage;
 import com.moecrow.demo.model.ResponseMessage;
+import com.moecrow.demo.model.User;
+import lombok.extern.java.Log;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
+import org.springframework.messaging.simp.stomp.StompHeaderAccessor;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Controller;
 
+import java.security.Principal;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -20,6 +24,7 @@ import java.util.Date;
  * @version 1.0
  * @since 2018/2/28
  */
+@Log
 @Controller
 public class WsController {
 
@@ -32,8 +37,12 @@ public class WsController {
 
     @MessageMapping("/welcome")
     @SendTo("/topic/say")
-    public ResponseMessage say(RequestMessage message) {
-        System.out.println(message.getName());
+    public ResponseMessage say(StompHeaderAccessor accessor, RequestMessage message) {
+        log.info("welcome: " + message.getName());
+
+        User user = (User) accessor.getSessionAttributes().get("user");
+        log.info("username:" + user.getUserName());
+
         return new ResponseMessage("welcome," + message.getName() + " !");
     }
 
