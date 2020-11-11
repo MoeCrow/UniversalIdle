@@ -3,4 +3,13 @@
 	 width="640"
 	height="1136" xmlns:e="http://ns.egret.com/eui">
 	<e:Label text="sqd" x="297" y="518"/>
+	<e:Group height="200" left="0" right="0" top="0">
+		<e:Label text="selection" x="92" y="52"/>
+	</e:Group>
+	<e:Group left="0" right="0" top="200" bottom="300">
+		<e:Label text="eqp" x="88" y="79"/>
+	</e:Group>
+	<e:Group height="300" left="0" right="0" bottom="39">
+		<e:Label text="operations" x="80" y="61"/>
+	</e:Group>
 </e:Skin>

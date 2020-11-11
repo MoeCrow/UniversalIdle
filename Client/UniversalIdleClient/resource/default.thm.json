@@ -30,6 +30,7 @@
 		"resource/eui_skins/ui/BattleUiSkin.exml",
 		"resource/eui_skins/ui/CharacterUiSkin.exml",
 		"resource/eui_skins/ui/HomeUiSkin.exml",
+		"resource/eui_skins/ui/InventoryItemSkin.exml",
 		"resource/eui_skins/ui/InventoryUiSkin.exml",
 		"resource/eui_skins/ui/MainUiSkin.exml",
 		"resource/eui_skins/ui/SquardUiSkin.exml",

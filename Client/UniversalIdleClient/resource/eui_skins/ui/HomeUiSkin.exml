@@ -2,5 +2,16 @@
 <e:Skin class="HomeUiSkin"
 	 width="640"
 	height="1136" xmlns:e="http://ns.egret.com/eui">
-	<e:Label text="home" x="241" y="165"/>
+	<e:Label text="home" y="166" horizontalCenter="0"/>
+	<e:Button label="Button" x="508" y="40"/>
+	<e:Button label="Button" x="509" y="115"/>
+	<e:Button label="Button" x="187" y="475"/>
+	<e:Button label="Button" x="358" y="475"/>
+	<e:Button label="Button" x="189" y="611"/>
+	<e:Button label="Button" x="358" y="611"/>
+	<e:Group height="200" bottom="0" left="0" right="0">
+		<e:Button label="Button" x="123" scaleX="1" scaleY="1" bottom="50"/>
+		<e:Button label="Button" x="266" scaleX="1" scaleY="1" bottom="50"/>
+		<e:Button label="Button" x="418" scaleX="1" scaleY="1" bottom="50"/>
+	</e:Group>
 </e:Skin>

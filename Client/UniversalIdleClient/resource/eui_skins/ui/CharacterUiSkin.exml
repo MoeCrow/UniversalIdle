@@ -3,4 +3,10 @@
 	 width="640"
 	height="1136" xmlns:e="http://ns.egret.com/eui">
 	<e:Label text="chr" x="320" y="527"/>
+	<e:Group height="300" top="0" left="0" right="0">
+		<e:Label text="info" x="81" y="54"/>
+	</e:Group>
+	<e:Group left="0" right="0" top="300" bottom="0">
+		<e:Label text="equipment" x="81" y="92"/>
+	</e:Group>
 </e:Skin>

@@ -48,6 +48,8 @@ declare class CharacterUiSkin extends eui.Skin{
 }
 declare class HomeUiSkin extends eui.Skin{
 }
+declare class InventoryItemSkin extends eui.Skin{
+}
 declare class InventoryUiSkin extends eui.Skin{
 }
 declare class MainUiSkin extends eui.Skin{
