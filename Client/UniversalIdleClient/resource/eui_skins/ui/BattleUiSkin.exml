@@ -2,5 +2,5 @@
 <e:Skin class="BattleUiSkin"
 	 width="640"
 	height="1136" xmlns:e="http://ns.egret.com/eui">
-	<e:Label text="btl" x="299" y="504"/>
+	<e:Label text="btl" horizontalCenter="0" verticalCenter="0"/>
 </e:Skin>
