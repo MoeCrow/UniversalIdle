@@ -18,8 +18,6 @@ import org.springframework.web.socket.messaging.SubProtocolWebSocketHandler;
 public class CustomSubProtocolWebSocketHandler extends SubProtocolWebSocketHandler {
     private static final Logger LOGGER = LoggerFactory.getLogger(CustomSubProtocolWebSocketHandler.class);
 
-//    @Autowired
-//    private SessionHandler sessionHandler;
 
     public CustomSubProtocolWebSocketHandler(MessageChannel clientInboundChannel, SubscribableChannel clientOutboundChannel) {
         super(clientInboundChannel, clientOutboundChannel);

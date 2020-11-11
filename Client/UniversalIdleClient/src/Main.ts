@@ -68,7 +68,7 @@ class Main extends eui.Component {
 
         // var client = Stomp.client("ws://192.168.0.134:8080/simple", null)
         var ws = new egret.WebSocket()
-        var url = "ws://192.168.0.134:8080/simple";
+        var url = "ws://192.168.0.134:8080/simple?token=123";
         var client = Stomp.over(new SocketWrap(ws, url))
         ws.connectByUrl(url)
 

@@ -1,7 +1,10 @@
 package com.moecrow.demo.config;
 
 import com.moecrow.demo.handler.CustomSubProtocolWebSocketHandler;
-import com.moecrow.demo.interceptor.WebSocketInterceptor;
+import com.moecrow.demo.interceptor.AuthHandshakeInterceptor;
+import com.moecrow.demo.interceptor.MyChannelInterceptor;
+import com.moecrow.demo.interceptor.MyHandshakeHandler;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.server.ServerHttpRequest;
@@ -29,6 +32,14 @@ import java.util.Map;
 @Configuration
 @EnableWebSocketMessageBroker
 public class WebSocketStompConfig extends WebSocketMessageBrokerConfigurationSupport implements WebSocketMessageBrokerConfigurer {
+    @Autowired
+    private AuthHandshakeInterceptor authHandshakeInterceptor;
+
+    @Autowired
+    private MyHandshakeHandler myHandshakeHandler;
+
+    @Autowired
+    private MyChannelInterceptor myChannelInterceptor;
 
     @Override
     public void configureWebSocketTransport(WebSocketTransportRegistration registry) {
@@ -42,7 +53,7 @@ public class WebSocketStompConfig extends WebSocketMessageBrokerConfigurationSup
 
     @Override
     public void configureClientInboundChannel(ChannelRegistration registration) {
-        super.configureClientInboundChannel(registration);
+        registration.interceptors(myChannelInterceptor);
     }
 
     @Override
@@ -87,7 +98,8 @@ public class WebSocketStompConfig extends WebSocketMessageBrokerConfigurationSup
 //                    }
 //                })
                 //解决跨域问题
-                .addInterceptors(new WebSocketInterceptor())
+                .addInterceptors(authHandshakeInterceptor)
+                .setHandshakeHandler(myHandshakeHandler)
                 .setAllowedOrigins("*");
 //                .withSockJS();
     }
