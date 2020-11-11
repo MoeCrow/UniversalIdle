@@ -1,14 +1,11 @@
 package com.moecrow.demo.config;
 
-import com.moecrow.demo.handler.CustomSubProtocolWebSocketHandler;
+import com.moecrow.demo.handler.StompWebSocketHandler;
 import com.moecrow.demo.interceptor.AuthHandshakeInterceptor;
 import com.moecrow.demo.interceptor.MyChannelInterceptor;
-import com.moecrow.demo.interceptor.MyHandshakeHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.server.ServerHttpRequest;
-import org.springframework.http.server.ServletServerHttpRequest;
 import org.springframework.messaging.converter.MessageConverter;
 import org.springframework.messaging.handler.invocation.HandlerMethodArgumentResolver;
 import org.springframework.messaging.handler.invocation.HandlerMethodReturnValueHandler;
@@ -16,11 +13,9 @@ import org.springframework.messaging.simp.config.ChannelRegistration;
 import org.springframework.messaging.simp.config.MessageBrokerRegistry;
 import org.springframework.web.socket.WebSocketHandler;
 import org.springframework.web.socket.config.annotation.*;
-import org.springframework.web.socket.server.support.DefaultHandshakeHandler;
 
 import java.security.Principal;
 import java.util.List;
-import java.util.Map;
 
 /**
  * STOMP协议的WebStocket
@@ -34,9 +29,6 @@ import java.util.Map;
 public class WebSocketStompConfig extends WebSocketMessageBrokerConfigurationSupport implements WebSocketMessageBrokerConfigurer {
     @Autowired
     private AuthHandshakeInterceptor authHandshakeInterceptor;
-
-    @Autowired
-    private MyHandshakeHandler myHandshakeHandler;
 
     @Autowired
     private MyChannelInterceptor myChannelInterceptor;
@@ -99,7 +91,6 @@ public class WebSocketStompConfig extends WebSocketMessageBrokerConfigurationSup
 //                })
                 //解决跨域问题
                 .addInterceptors(authHandshakeInterceptor)
-                .setHandshakeHandler(myHandshakeHandler)
                 .setAllowedOrigins("*");
 //                .withSockJS();
     }
@@ -112,7 +103,7 @@ public class WebSocketStompConfig extends WebSocketMessageBrokerConfigurationSup
     @Override
     @Bean
     public WebSocketHandler subProtocolWebSocketHandler() {
-        return new CustomSubProtocolWebSocketHandler(clientInboundChannel(), clientOutboundChannel());
+        return new StompWebSocketHandler(clientInboundChannel(), clientOutboundChannel());
     }
 
 }

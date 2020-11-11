@@ -17,9 +17,9 @@ import org.springframework.web.socket.messaging.SubProtocolWebSocketHandler;
  * @date 2020.11.09
  */
 @Log
-public class CustomSubProtocolWebSocketHandler extends SubProtocolWebSocketHandler {
+public class StompWebSocketHandler extends SubProtocolWebSocketHandler {
 
-    public CustomSubProtocolWebSocketHandler(MessageChannel clientInboundChannel, SubscribableChannel clientOutboundChannel) {
+    public StompWebSocketHandler(MessageChannel clientInboundChannel, SubscribableChannel clientOutboundChannel) {
         super(clientInboundChannel, clientOutboundChannel);
     }
 
