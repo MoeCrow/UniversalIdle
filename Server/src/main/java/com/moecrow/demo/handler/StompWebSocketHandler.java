@@ -1,6 +1,8 @@
 package com.moecrow.demo.handler;
 
+import com.moecrow.demo.commons.SpringContextUtils;
 import com.moecrow.demo.model.User;
+import com.moecrow.demo.model.UserSession;
 import lombok.extern.java.Log;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,6 +21,9 @@ import org.springframework.web.socket.messaging.SubProtocolWebSocketHandler;
 @Log
 public class StompWebSocketHandler extends SubProtocolWebSocketHandler {
 
+    @Autowired
+    UserSession userSession;
+
     public StompWebSocketHandler(MessageChannel clientInboundChannel, SubscribableChannel clientOutboundChannel) {
         super(clientInboundChannel, clientOutboundChannel);
     }
@@ -29,6 +34,9 @@ public class StompWebSocketHandler extends SubProtocolWebSocketHandler {
         User user = (User) session.getAttributes().get("user");
         log.info("新连接建立:" + user.getUserName());
         super.afterConnectionEstablished(session);
+
+//        userSession.getUser();
+//        log.info(SpringContextUtils.getSession().toString());
     }
 
     @Override

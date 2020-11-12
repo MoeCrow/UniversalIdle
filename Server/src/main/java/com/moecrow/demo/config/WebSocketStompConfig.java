@@ -64,35 +64,11 @@ public class WebSocketStompConfig extends WebSocketMessageBrokerConfigurationSup
         super.addReturnValueHandlers(returnValueHandlers);
     }
 
-    class FastPrincipal implements Principal {
-
-        private final String name;
-
-        public FastPrincipal(String name) {
-            this.name = name;
-        }
-
-        @Override
-        public String getName() {
-            return name;
-        }
-    }
-
-
     @Override
     public void registerStompEndpoints(StompEndpointRegistry stompEndpointRegistry) {
         stompEndpointRegistry.addEndpoint("/simple")
-//                .setHandshakeHandler(new DefaultHandshakeHandler() {
-//                    @Override
-//                    protected Principal determineUser(ServerHttpRequest request, WebSocketHandler wsHandler, Map<String, Object> attributes) {
-//                        //握手成功后调用，可以在这里保存用户id
-//                        return new FastPrincipal(((ServletServerHttpRequest) request).getServletRequest().getParameter("name"));
-//                    }
-//                })
-                //解决跨域问题
                 .addInterceptors(authHandshakeInterceptor)
                 .setAllowedOrigins("*");
-//                .withSockJS();
     }
 
     @Override

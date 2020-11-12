@@ -2,8 +2,10 @@ package com.moecrow.demo.interceptor;
 
 import com.moecrow.demo.commons.SpringContextUtils;
 import com.moecrow.demo.model.User;
+import com.moecrow.demo.model.UserSession;
 import lombok.extern.java.Log;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.server.ServerHttpRequest;
 import org.springframework.http.server.ServerHttpResponse;
 import org.springframework.stereotype.Component;
@@ -21,6 +23,8 @@ import java.util.Map;
 @Log
 @Component
 public class AuthHandshakeInterceptor implements HandshakeInterceptor {
+    private static int count = 0;
+
     @Override
     public boolean beforeHandshake(ServerHttpRequest serverHttpRequest, ServerHttpResponse serverHttpResponse,
                                    WebSocketHandler webSocketHandler, Map<String, Object> attributes) throws Exception {
@@ -32,8 +36,13 @@ public class AuthHandshakeInterceptor implements HandshakeInterceptor {
         }
 
         //todo login check
-        User user = User.builder().id(1).userName(token).build();
+        User user = User.builder().id(count++).userName(token).build();
         attributes.put("user", user);
+
+        UserSession userSession = new UserSession();
+        userSession.setUser(user);
+
+        attributes.put("scopedTarget.userSession", userSession);
 
         if(user != null){
             log.info(MessageFormat.format("用户{0}请求建立WebSocket连接", user.getUserName()));

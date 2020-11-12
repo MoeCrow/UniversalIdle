@@ -1,5 +1,6 @@
 package com.moecrow.demo.interceptor;
 
+import com.moecrow.demo.model.User;
 import lombok.extern.java.Log;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.messaging.Message;
@@ -27,15 +28,13 @@ public class MyChannelInterceptor implements ChannelInterceptor {
 
         //用户已经断开连接
         if(StompCommand.DISCONNECT.equals(command)){
-            String user = "";
-            Principal principal = accessor.getUser();
-            if(principal != null && StringUtils.isNoneBlank(principal.getName())){
-                user = principal.getName();
-            }else{
-                user = accessor.getSessionId();
-            }
+            User user = (User) accessor.getSessionAttributes().get("user");
 
-            log.info(MessageFormat.format("用户{0}的WebSocket连接已经断开", user));
+            if(user != null){
+                log.info(MessageFormat.format("用户{0}的WebSocket连接已经断开", user.getId()));
+            }else{
+//                user = accessor.getSessionId();
+            }
         }
     }
 

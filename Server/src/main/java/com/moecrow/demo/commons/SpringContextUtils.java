@@ -1,6 +1,8 @@
 package com.moecrow.demo.commons;
 
+import org.apache.naming.factory.BeanFactory;
 import org.springframework.beans.BeansException;
+import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.stereotype.Component;
@@ -43,6 +45,10 @@ public class SpringContextUtils implements ApplicationContextAware {
      */
     public static ApplicationContext getApplicationContext(){
         return applicationContext;
+    }
+
+    public static ConfigurableListableBeanFactory getBeanFactory() {
+        return applicationContext.getBeanFactory();
     }
 
     /**
