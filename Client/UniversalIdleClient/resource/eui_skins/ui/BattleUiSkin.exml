@@ -4,9 +4,21 @@
 	height="1136" xmlns:e="http://ns.egret.com/eui">
 	<e:Label text="btl" horizontalCenter="0" verticalCenter="0"/>
 	<e:Group height="380" left="20" right="20" top="20">
-		<e:Label text="top" x="108" y="62"/>
+		<e:Label text="top" horizontalCenter="0" top="80"/>
 	</e:Group>
 	<e:Group anchorOffsetX="0" anchorOffsetY="0" bottom="20" left="20" right="20" top="400">
-		<e:Label text="bottom" x="94" y="98"/>
+		<e:Label text="bottom" horizontalCenter="0" top="20"/>
+		<e:List anchorOffsetX="0" anchorOffsetY="0" left="20" right="20" top="68" bottom="30" itemRendererSkinName="TextLineItemSkin">
+			<e:ArrayCollection>
+				<e:Array>
+					<e:Object txt="asdfasdf"/>
+					<e:Object txt="324wefasdf"/>
+					<e:Object txt="dfgadsfs啊手动阀手dfgadsfs啊手动阀手动阀dfgadsfs啊手动阀手动阀dfgadsfs啊手动阀手动阀动阀"/>
+				</e:Array>
+			</e:ArrayCollection>
+			<e:layout>
+				<e:VerticalLayout verticalAlign="top" horizontalAlign="left"/>
+			</e:layout>
+		</e:List>
 	</e:Group>
 </e:Skin>

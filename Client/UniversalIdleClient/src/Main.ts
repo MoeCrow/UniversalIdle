@@ -83,7 +83,19 @@ class Main extends eui.Component {
                 console.log(response.body);
             });
 
+            client.subscribe('/user/queue/errors', function (response) {
+                console.log(response.body);
+            });
+
             client.send("/welcome", {}, JSON.stringify({'name': 'user'}));
+
+            client.subscribe('/user/queue/battle', function (response) {
+                console.log(response.body);
+            });
+
+            setInterval(()=>{
+                client.send("/battle", {}, JSON.stringify({'mapId': '1'}));
+            }, 10000)
         });
 
         // this.createGameScene();

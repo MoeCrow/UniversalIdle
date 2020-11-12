@@ -34,6 +34,7 @@
 		"resource/eui_skins/ui/InventoryUiSkin.exml",
 		"resource/eui_skins/ui/MainUiSkin.exml",
 		"resource/eui_skins/ui/SquardUiSkin.exml",
+		"resource/eui_skins/ui/TextLineItemSkin.exml",
 		"resource/eui_skins/VScrollBarSkin.exml",
 		"resource/eui_skins/VSliderSkin.exml"
 	],

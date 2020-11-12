@@ -56,6 +56,8 @@ declare class MainUiSkin extends eui.Skin{
 }
 declare class SquardUiSkin extends eui.Skin{
 }
+declare class TextLineItemSkin extends eui.Skin{
+}
 declare module skins{
 	class VScrollBarSkin extends eui.Skin{
 	}
