@@ -1,6 +1,7 @@
 package com.moecrow.demo.config;
 
 import com.moecrow.demo.handler.StompWebSocketHandler;
+import com.moecrow.demo.handler.UserIdHandshakeHandler;
 import com.moecrow.demo.interceptor.AuthHandshakeInterceptor;
 import com.moecrow.demo.interceptor.MyChannelInterceptor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +30,9 @@ import java.util.List;
 public class WebSocketStompConfig extends WebSocketMessageBrokerConfigurationSupport implements WebSocketMessageBrokerConfigurer {
     @Autowired
     private AuthHandshakeInterceptor authHandshakeInterceptor;
+
+    @Autowired
+    private UserIdHandshakeHandler userIdHandshakeHandler;
 
     @Autowired
     private MyChannelInterceptor myChannelInterceptor;
@@ -68,12 +72,14 @@ public class WebSocketStompConfig extends WebSocketMessageBrokerConfigurationSup
     public void registerStompEndpoints(StompEndpointRegistry stompEndpointRegistry) {
         stompEndpointRegistry.addEndpoint("/simple")
                 .addInterceptors(authHandshakeInterceptor)
+                .setHandshakeHandler(userIdHandshakeHandler)
                 .setAllowedOrigins("*");
     }
 
     @Override
     public void configureMessageBroker(MessageBrokerRegistry registry) {
-        registry.enableSimpleBroker("/topic");
+        registry
+                .enableSimpleBroker("/topic", "/queue");
     }
 
     @Override

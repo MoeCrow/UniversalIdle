@@ -79,13 +79,11 @@ class Main extends eui.Component {
                 console.log(JSON.parse(response.body).responseMessage);
             });
 
-            client.subscribe('/topic/callback', function (response) {
+            client.subscribe('/user/queue/heartbeat', function (response) {
                 console.log(response.body);
             });
 
-            setInterval(()=>{
-                client.send("/welcome", {}, JSON.stringify({'name': 'user'}));
-            }, 2000)
+            client.send("/welcome", {}, JSON.stringify({'name': 'user'}));
         });
 
         // this.createGameScene();

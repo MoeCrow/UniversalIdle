@@ -5,14 +5,12 @@ import com.moecrow.demo.model.User;
 import com.moecrow.demo.model.UserSession;
 import lombok.extern.java.Log;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.server.ServerHttpRequest;
 import org.springframework.http.server.ServerHttpResponse;
 import org.springframework.stereotype.Component;
 import org.springframework.web.socket.WebSocketHandler;
 import org.springframework.web.socket.server.HandshakeInterceptor;
 
-import javax.servlet.http.HttpSession;
 import java.text.MessageFormat;
 import java.util.Map;
 

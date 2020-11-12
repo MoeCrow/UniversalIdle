@@ -1,5 +1,6 @@
 package com.moecrow.demo.controller;
 
+import com.moecrow.demo.commons.UserRepository;
 import com.moecrow.demo.model.RequestMessage;
 import com.moecrow.demo.model.ResponseMessage;
 import com.moecrow.demo.model.User;
@@ -35,6 +36,9 @@ public class WsController {
     @Autowired
     UserSession userSession;
 
+    @Autowired
+    UserRepository userRepository;
+
     @MessageMapping("/welcome")
     @SendTo("/topic/say")
     public ResponseMessage say(RequestMessage message) {
@@ -44,13 +48,11 @@ public class WsController {
         return new ResponseMessage("welcome," + message.getName() + " !");
     }
 
-    /**
-     * 定时推送消息
-     */
-    @Scheduled(fixedRate = 1000)
-    public void callback() {
-        // 发现消息
+    @Scheduled(fixedRate = 10000)
+    public void heartbeat() {
         DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        messagingTemplate.convertAndSend("/topic/callback", "定时推送消息时间: " + df.format(new Date()));
+        for (User user : userRepository.all()) {
+            messagingTemplate.convertAndSendToUser(String.valueOf(user.getId()),"/queue/heartbeat", "heartbeat " + df.format(new Date()));
+        }
     }
 }
