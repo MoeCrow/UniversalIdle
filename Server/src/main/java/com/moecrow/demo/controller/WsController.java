@@ -1,11 +1,11 @@
 package com.moecrow.demo.controller;
 
-import com.moecrow.demo.commons.UserRepository;
-import com.moecrow.demo.domain.dto.BattleResultMessage;
-import com.moecrow.demo.domain.dto.BattleStartMessage;
+import com.moecrow.demo.commons.UserSessionRepository;
+import com.moecrow.demo.dao.entity.User;
+import com.moecrow.demo.model.dto.BattleResultMessage;
+import com.moecrow.demo.model.dto.BattleStartMessage;
 import com.moecrow.demo.model.RequestMessage;
 import com.moecrow.demo.model.ResponseMessage;
-import com.moecrow.demo.model.User;
 import com.moecrow.demo.model.UserSession;
 import lombok.extern.java.Log;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,7 +39,7 @@ public class WsController {
     UserSession userSession;
 
     @Autowired
-    UserRepository userRepository;
+    UserSessionRepository userSessionRepository;
 
     @MessageExceptionHandler(Exception.class)
     @SendToUser("/queue/errors")
@@ -62,7 +62,7 @@ public class WsController {
     @SendTo("/topic/say")
     public ResponseMessage say(RequestMessage message) {
         User user = userSession.getUser();
-        log.info("user:" + user.getUserName());
+        log.info("user:" + user.getName());
 
         return new ResponseMessage("welcome," + message.getName() + " !");
     }
@@ -70,7 +70,7 @@ public class WsController {
     @Scheduled(fixedRate = 10000)
     public void heartbeat() {
         DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        for (User user : userRepository.all()) {
+        for (User user : userSessionRepository.all()) {
             messagingTemplate.convertAndSendToUser(String.valueOf(user.getId()),"/queue/heartbeat", "heartbeat " + df.format(new Date()));
         }
     }

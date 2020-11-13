@@ -27,7 +27,7 @@ public class AuthenticationAspect {
 
     @Around("pointCut()")
     public Object around(ProceedingJoinPoint pjp) throws Throwable {
-        log.info("aop:" + userSession.toString());
+//        log.info("aop:" + userSession.toString());
         Object result = pjp.proceed();
         return result;
     }

@@ -1,6 +1,6 @@
 package com.moecrow.demo.interceptor;
 
-import com.moecrow.demo.model.User;
+import com.moecrow.demo.dao.entity.User;
 import lombok.extern.java.Log;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.messaging.Message;

@@ -1,6 +1,6 @@
 package com.moecrow.demo.commons;
 
-import com.moecrow.demo.model.User;
+import com.moecrow.demo.dao.entity.User;
 import org.springframework.stereotype.Component;
 
 import java.util.HashMap;
@@ -11,7 +11,7 @@ import java.util.Map;
  * @date 2020.11.12
  */
 @Component
-public class UserRepository {
+public class UserSessionRepository {
     Map<Object, User> map = new HashMap<>();
     //todo callback
 

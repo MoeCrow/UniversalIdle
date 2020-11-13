@@ -1,4 +1,4 @@
-package com.moecrow.demo.domain.dto;
+package com.moecrow.demo.model.dto;
 
 import lombok.Builder;
 import lombok.Data;

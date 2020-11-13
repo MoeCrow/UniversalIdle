@@ -1,5 +1,6 @@
 package com.moecrow.demo.model;
 
+import com.moecrow.demo.dao.entity.User;
 import lombok.Data;
 import org.springframework.context.annotation.Scope;
 import org.springframework.context.annotation.ScopedProxyMode;

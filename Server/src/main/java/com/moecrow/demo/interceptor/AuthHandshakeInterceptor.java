@@ -1,10 +1,13 @@
 package com.moecrow.demo.interceptor;
 
 import com.moecrow.demo.commons.SpringContextUtils;
-import com.moecrow.demo.model.User;
+import com.moecrow.demo.dao.entity.User;
 import com.moecrow.demo.model.UserSession;
 import lombok.extern.java.Log;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.query.BasicQuery;
 import org.springframework.http.server.ServerHttpRequest;
 import org.springframework.http.server.ServerHttpResponse;
 import org.springframework.stereotype.Component;
@@ -23,6 +26,9 @@ import java.util.Map;
 public class AuthHandshakeInterceptor implements HandshakeInterceptor {
     private static int count = 0;
 
+    @Autowired
+    MongoTemplate mongoTemplate;
+
     @Override
     public boolean beforeHandshake(ServerHttpRequest serverHttpRequest, ServerHttpResponse serverHttpResponse,
                                    WebSocketHandler webSocketHandler, Map<String, Object> attributes) throws Exception {
@@ -34,7 +40,7 @@ public class AuthHandshakeInterceptor implements HandshakeInterceptor {
         }
 
         //todo login check
-        User user = User.builder().id(count++).userName(token).build();
+        User user = mongoTemplate.findOne(new BasicQuery(MessageFormat.format("'{'token:''{0}''}", token)), User.class);
         attributes.put("user", user);
 
         UserSession userSession = new UserSession();
@@ -43,7 +49,7 @@ public class AuthHandshakeInterceptor implements HandshakeInterceptor {
         attributes.put("scopedTarget.userSession", userSession);
 
         if(user != null){
-            log.info(MessageFormat.format("用户{0}请求建立WebSocket连接", user.getUserName()));
+            log.info(MessageFormat.format("用户{0}请求建立WebSocket连接", user.getName()));
             return true;
         }else{
             log.severe("未登录系统，禁止连接WebSocket");
