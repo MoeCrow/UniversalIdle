@@ -61,10 +61,7 @@ public class WsController {
 
         User user = userSession.getUser();
 
-        userRepository.increase(user.getId(), new HashMap<String, Object>(){{
-            put("money", reward * 2);
-            put("experiences", reward);
-        }});
+        userRepository.increase(user.getId(), User.builder().money(reward * 2).experiences(reward).build());
 
         return BattleResultMessage.builder()
                 .success(true)
