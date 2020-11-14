@@ -43,7 +43,7 @@ public class AuthHandshakeInterceptor implements HandshakeInterceptor {
         }
 
         //todo login check
-        User user = userRepository.find("token", token);
+        User user = userRepository.find(User.builder().token(token).build());
         attributes.put("user", user);
 
         UserSession userSession = new UserSession();
@@ -55,7 +55,7 @@ public class AuthHandshakeInterceptor implements HandshakeInterceptor {
             log.info(MessageFormat.format("用户{0}请求建立WebSocket连接", user.getName()));
 
             user.setLastLogin(new Date());
-            userRepository.save(user);
+            userRepository.update(user.getId(), User.builder().lastLogin(new Date()).build());
             return true;
         }else{
             log.severe("未登录系统，禁止连接WebSocket");

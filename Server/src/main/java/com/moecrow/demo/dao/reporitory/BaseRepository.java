@@ -13,13 +13,11 @@ public interface BaseRepository<T, ID extends Serializable> extends MongoReposit
 
     void batchDelete(List<ID> pks);
 
-    void update(ID id, Map<String, Object> updateFieldMap);
+    void update(ID id, Object values);
 
-    void modify(ID id, Map<String, Object> modifyFieldMap);
+    void increase(ID id, Object values);
 
-    void update(Map<String,Object> queryParamMap, Map<String, Object> updateFieldMap);
+    void update(Object keys, Object values);
 
-    T findByIdAndType(ID id,Integer type);
-
-    T find(String key, Object value);
+    T find(Object keys);
 }

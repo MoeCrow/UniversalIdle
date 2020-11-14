@@ -27,13 +27,19 @@ public class MyApplicationRunner implements ApplicationRunner {
 
     @Override
     public void run(ApplicationArguments args) throws Exception {
-        User user = userRepository.find("token", "123");
+        User user = userRepository.find(User.builder().token("123").build());
 
         if (user == null) {
-            user = new User();
+            user = User.builder().build();
 
             user.setName("tester");
             user.setToken("123");
+
+            user.setMoney(0);
+            user.setCredit(0);
+            user.setLevel(1);
+            user.setExperiences(0);
+            user.setCreatedTime(new Date());
 
             userRepository.save(user);
         }

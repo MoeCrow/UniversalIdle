@@ -1,9 +1,9 @@
 package com.moecrow.demo.dao.entity;
 
+import lombok.Builder;
 import lombok.Data;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
-import org.springframework.data.mongodb.core.index.TextIndexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.Date;
@@ -13,6 +13,7 @@ import java.util.Date;
  * @date 2020.11.13
  */
 @Data
+@Builder
 @Document
 public class User {
     @Id
@@ -20,20 +21,20 @@ public class User {
 
     private String name;
 
-    @Indexed(unique = true, useGeneratedName = true)
+    @Indexed(unique = true)
     private String token;
 
     private String password;
 
-    private Integer money = 0;
+    private Integer money;
 
-    private Integer credit = 0;
+    private Integer credit;
 
-    private Integer level = 1;
+    private Integer level;
 
-    private Integer experiences = 0;
+    private Integer experiences;
 
-    private Date createdTime = new Date();
+    private Date createdTime;
 
     private Date lastLogin;
 }

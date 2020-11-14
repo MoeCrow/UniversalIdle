@@ -3,17 +3,13 @@ package com.moecrow.demo.controller;
 import com.moecrow.demo.commons.UserSessionRepository;
 import com.moecrow.demo.dao.entity.User;
 import com.moecrow.demo.dao.reporitory.UserRepository;
-import com.moecrow.demo.model.dto.BattleResultMessage;
-import com.moecrow.demo.model.dto.BattleStartMessage;
 import com.moecrow.demo.model.RequestMessage;
 import com.moecrow.demo.model.ResponseMessage;
 import com.moecrow.demo.model.UserSession;
+import com.moecrow.demo.model.dto.BattleResultMessage;
+import com.moecrow.demo.model.dto.BattleStartMessage;
 import lombok.extern.java.Log;
-import org.bson.Document;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.mongodb.core.MongoTemplate;
-import org.springframework.data.mongodb.core.query.BasicQuery;
-import org.springframework.data.mongodb.core.query.BasicUpdate;
 import org.springframework.messaging.handler.annotation.MessageExceptionHandler;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
@@ -23,7 +19,6 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Controller;
 
 import java.text.DateFormat;
-import java.text.MessageFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
@@ -66,7 +61,7 @@ public class WsController {
 
         User user = userSession.getUser();
 
-        userRepository.modify(user.getId(), new HashMap<String, Object>(){{
+        userRepository.increase(user.getId(), new HashMap<String, Object>(){{
             put("money", reward * 2);
             put("experiences", reward);
         }});
