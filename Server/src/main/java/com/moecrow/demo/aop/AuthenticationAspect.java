@@ -1,13 +1,12 @@
 package com.moecrow.demo.aop;
 
-import com.moecrow.demo.model.UserSession;
+import com.moecrow.demo.commons.UserSession;
 import lombok.extern.java.Log;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
 /**

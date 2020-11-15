@@ -1,9 +1,8 @@
 package com.moecrow.demo.dao.reporitory;
 
-import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.serializer.JavaBeanSerializer;
-import com.alibaba.fastjson.serializer.ObjectSerializer;
 import com.alibaba.fastjson.serializer.SerializeConfig;
+import org.springframework.data.mongodb.core.FindAndModifyOptions;
 import org.springframework.data.mongodb.core.MongoOperations;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
@@ -27,11 +26,15 @@ public class BaseRepositoryImpl<T, ID extends Serializable> extends SimpleMongoR
 
     private Class<T> clazz;
 
+    private FindAndModifyOptions returnNewModifyOptions;
+
     public BaseRepositoryImpl(MongoEntityInformation<T, ID> metadata, MongoOperations mongoOperations) {
         super(metadata, mongoOperations);
         this.mongoTemplate=mongoOperations;
         this.entityInformation = metadata;
         clazz = entityInformation.getJavaType();
+
+        returnNewModifyOptions = FindAndModifyOptions.options().returnNew(true);
     }
 
     private void forEachValidFields(T obj, BiConsumer<? super String, ? super Object> action) {
@@ -49,23 +52,23 @@ public class BaseRepositoryImpl<T, ID extends Serializable> extends SimpleMongoR
     }
 
     @Override
-    public void update(ID id, T values) {
+    public T update(ID id, T values) {
         Criteria criteria = new Criteria("_id").is(id);
 
         Update update = new Update();
         forEachValidFields(values, update::set);
 
-        mongoTemplate.findAndModify(new Query(criteria), update, clazz);
+        return mongoTemplate.findAndModify(new Query(criteria), update, returnNewModifyOptions, clazz);
     }
 
     @Override
-    public void increase(ID id, T values) {
+    public T increase(ID id, T values) {
         Criteria criteria = new Criteria("_id").is(id);
 
         Update update = new Update();
         forEachValidFields(values, (k, v)->update.inc(k, (Number)v));
 
-        mongoTemplate.findAndModify(new Query(criteria), update, clazz);
+        return mongoTemplate.findAndModify(new Query(criteria), update, returnNewModifyOptions, clazz);
     }
 
     @Override
@@ -77,7 +80,7 @@ public class BaseRepositoryImpl<T, ID extends Serializable> extends SimpleMongoR
         Update update = new Update();
         forEachValidFields(values, update::set);
 
-        mongoTemplate.findAndModify(new Query(criteria), update, clazz);
+        mongoTemplate.findAndModify(new Query(criteria), update, returnNewModifyOptions, clazz);
     }
 
     @Override
@@ -86,6 +89,12 @@ public class BaseRepositoryImpl<T, ID extends Serializable> extends SimpleMongoR
         forEachValidFields(keys, (k, v)->criteriaList.add(Criteria.where(k).is(v)));
         Criteria criteria = new Criteria().andOperator(criteriaList.toArray(new Criteria[0]));
 
+        return mongoTemplate.findOne(new Query(criteria), clazz);
+    }
+
+    @Override
+    public T find(ID id) {
+        Criteria criteria = new Criteria("_id").is(id);
         return mongoTemplate.findOne(new Query(criteria), clazz);
     }
 

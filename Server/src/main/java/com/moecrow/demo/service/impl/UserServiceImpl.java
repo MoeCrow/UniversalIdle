@@ -2,7 +2,7 @@ package com.moecrow.demo.service.impl;
 
 import com.moecrow.demo.dao.entity.User;
 import com.moecrow.demo.dao.reporitory.UserRepository;
-import com.moecrow.demo.model.UserSession;
+import com.moecrow.demo.commons.UserSession;
 import com.moecrow.demo.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;

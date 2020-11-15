@@ -3,13 +3,10 @@ package com.moecrow.demo.interceptor;
 import com.moecrow.demo.commons.SpringContextUtils;
 import com.moecrow.demo.dao.entity.User;
 import com.moecrow.demo.dao.reporitory.UserRepository;
-import com.moecrow.demo.model.UserSession;
+import com.moecrow.demo.commons.UserSession;
 import lombok.extern.java.Log;
 import org.apache.commons.lang3.StringUtils;
-import org.bson.Document;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.mongodb.core.MongoTemplate;
-import org.springframework.data.mongodb.core.query.BasicQuery;
 import org.springframework.http.server.ServerHttpRequest;
 import org.springframework.http.server.ServerHttpResponse;
 import org.springframework.stereotype.Component;
@@ -44,15 +41,16 @@ public class AuthHandshakeInterceptor implements HandshakeInterceptor {
 
         //todo login check
         User user = userRepository.find(User.builder().token(token).build());
-        attributes.put("user", user);
-
-        UserSession userSession = new UserSession();
-        userSession.setUser(user);
-
-        attributes.put("scopedTarget.userSession", userSession);
 
         if(user != null){
             log.info(MessageFormat.format("用户{0}请求建立WebSocket连接", user.getName()));
+
+            attributes.put("user", user);
+
+            UserSession userSession = new UserSession(userRepository);
+            userSession.setUserId(user.getId());
+
+            attributes.put("scopedTarget.userSession", userSession);
 
             user.setLastLogin(new Date());
             userRepository.update(user.getId(), User.builder().lastLogin(new Date()).build());

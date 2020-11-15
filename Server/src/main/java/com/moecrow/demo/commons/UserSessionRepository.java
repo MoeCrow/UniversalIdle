@@ -1,10 +1,8 @@
 package com.moecrow.demo.commons;
 
-import com.moecrow.demo.dao.entity.User;
 import org.springframework.stereotype.Component;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @author willz
@@ -12,22 +10,18 @@ import java.util.Map;
  */
 @Component
 public class UserSessionRepository {
-    Map<Object, User> map = new HashMap<>();
+    Set<Object> set = new HashSet<>();
     //todo callback
 
-    public Iterable<User> all() {
-        return map.values();
+    public Iterable<Object> all() {
+        return set;
     }
 
-    public User get(Object key) {
-        return map.getOrDefault(key, null);
-    }
-
-    public void add(Object key, User user) {
-        map.put(key, user);
+    public void add(Object key) {
+        set.add(key);
     }
 
     public void remove(Object key) {
-        map.remove(key);
+        set.remove(key);
     }
 }

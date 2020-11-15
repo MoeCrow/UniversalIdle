@@ -30,7 +30,7 @@ public class StompWebSocketHandler extends SubProtocolWebSocketHandler {
         log.info("新连接建立:" + user.getName());
         super.afterConnectionEstablished(session);
 
-        userSessionRepository.add(user.getId(), user);
+        userSessionRepository.add(user.getId());
     }
 
     @Override

@@ -5,7 +5,7 @@ import com.moecrow.demo.dao.entity.User;
 import com.moecrow.demo.dao.reporitory.UserRepository;
 import com.moecrow.demo.model.RequestMessage;
 import com.moecrow.demo.model.ResponseMessage;
-import com.moecrow.demo.model.UserSession;
+import com.moecrow.demo.commons.UserSession;
 import com.moecrow.demo.model.dto.BattleResultMessage;
 import com.moecrow.demo.model.dto.BattleStartMessage;
 import lombok.extern.java.Log;
@@ -21,7 +21,6 @@ import org.springframework.stereotype.Controller;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.Random;
 
 @Log
@@ -74,8 +73,8 @@ public class WsController {
     @Scheduled(fixedRate = 10000)
     public void heartbeat() {
         DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        for (User user : userSessionRepository.all()) {
-            messagingTemplate.convertAndSendToUser(String.valueOf(user.getId()),"/queue/heartbeat", "heartbeat " + df.format(new Date()));
+        for (Object id : userSessionRepository.all()) {
+            messagingTemplate.convertAndSendToUser(String.valueOf(id),"/queue/heartbeat", "heartbeat " + df.format(new Date()));
         }
     }
 }
