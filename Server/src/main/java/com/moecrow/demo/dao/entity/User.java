@@ -32,6 +32,8 @@ public class User {
 
     private Integer level;
 
+    private Integer bonus;
+
     private Integer experiences;
 
     private Date createdTime;

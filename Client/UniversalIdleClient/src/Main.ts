@@ -72,9 +72,7 @@ class Main extends eui.Component {
         var client = Stomp.over(new SocketWrap(ws, url))
         ws.connectByUrl(url)
 
-        client.connect({}, function (frame) {
-            console.log('Connected:' + frame);
-            
+        client.connect({}, function (frame) {            
             client.subscribe('/topic/say', function (response) {
                 console.log(JSON.parse(response.body).responseMessage);
             });
@@ -91,6 +89,10 @@ class Main extends eui.Component {
 
             client.subscribe('/user/queue/battle', function (response) {
                 console.log(response.body);
+            });
+
+            client.subscribe('/shop/buy_some', function (response) {
+                console.log("buy result:", response.body);
             });
 
             setInterval(()=>{

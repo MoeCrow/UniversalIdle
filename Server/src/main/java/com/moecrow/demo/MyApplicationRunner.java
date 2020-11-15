@@ -24,16 +24,19 @@ public class MyApplicationRunner implements ApplicationRunner {
         User user = userRepository.find(User.builder().token("123").build());
 
         if (user == null) {
-            user = User.builder().build();
+            user = User.builder()
+                    .name("test")
+                    .token("123")
+                    .createdTime(new Date())
 
-            user.setName("tester");
-            user.setToken("123");
+                    .money(0)
+                    .credit(0)
+                    .level(1)
+                    .experiences(0)
 
-            user.setMoney(0);
-            user.setCredit(0);
-            user.setLevel(1);
-            user.setExperiences(0);
-            user.setCreatedTime(new Date());
+                    .bonus(0)
+
+                    .build();
 
             userRepository.save(user);
         }

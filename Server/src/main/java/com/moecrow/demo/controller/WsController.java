@@ -24,13 +24,6 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Random;
 
-/**
- * WsController
- *
- * @author XiongNeng
- * @version 1.0
- * @since 2018/2/28
- */
 @Log
 @Controller
 public class WsController {
@@ -56,12 +49,12 @@ public class WsController {
     @MessageMapping("/battle")
     @SendToUser("/queue/battle")
     public BattleResultMessage startBattle(BattleStartMessage battleStartMessage) {
-        Random random = new Random();
-        int reward = random.nextInt(10);
-
         User user = userSession.getUser();
 
-        userRepository.increase(user.getId(), User.builder().money(reward * 2).experiences(reward).build());
+        Random random = new Random();
+        int reward = random.nextInt(10) + user.getBonus();
+
+        userRepository.increase(user.getId(), User.builder().money(reward).experiences(reward * 10).build());
 
         return BattleResultMessage.builder()
                 .success(true)
