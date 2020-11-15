@@ -1,6 +1,9 @@
 package com.moecrow.demo.dao.reporitory;
 
 import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson.serializer.JavaBeanSerializer;
+import com.alibaba.fastjson.serializer.ObjectSerializer;
+import com.alibaba.fastjson.serializer.SerializeConfig;
 import org.springframework.data.mongodb.core.MongoOperations;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
@@ -31,17 +34,22 @@ public class BaseRepositoryImpl<T, ID extends Serializable> extends SimpleMongoR
         clazz = entityInformation.getJavaType();
     }
 
-    private void forEachValidFields(Object obj, BiConsumer<? super String, ? super Object> action) {
-        JSONObject json = (JSONObject) JSONObject.toJSON(obj);
-        json.forEach((k, v)-> {
-            if (v != null) {
-                action.accept(k, v);
-            }
-        });
+    private void forEachValidFields(T obj, BiConsumer<? super String, ? super Object> action) {
+        JavaBeanSerializer serializer = (JavaBeanSerializer) SerializeConfig.globalInstance.getObjectWriter(clazz);
+
+        try {
+            serializer.getFieldValuesMap(obj).forEach((k, v)-> {
+                if (v != null) {
+                    action.accept(k, v);
+                }
+            });
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
-    public void update(ID id, Object values) {
+    public void update(ID id, T values) {
         Criteria criteria = new Criteria("_id").is(id);
 
         Update update = new Update();
@@ -51,7 +59,7 @@ public class BaseRepositoryImpl<T, ID extends Serializable> extends SimpleMongoR
     }
 
     @Override
-    public void increase(ID id, Object values) {
+    public void increase(ID id, T values) {
         Criteria criteria = new Criteria("_id").is(id);
 
         Update update = new Update();
@@ -61,7 +69,7 @@ public class BaseRepositoryImpl<T, ID extends Serializable> extends SimpleMongoR
     }
 
     @Override
-    public void update(Object keys, Object values) {
+    public void update(T keys, T values) {
         List<Criteria> criteriaList = new ArrayList<>();
         forEachValidFields(keys, (k, v)->criteriaList.add(Criteria.where(k).is(v)));
         Criteria criteria = new Criteria().andOperator(criteriaList.toArray(new Criteria[0]));
@@ -73,7 +81,7 @@ public class BaseRepositoryImpl<T, ID extends Serializable> extends SimpleMongoR
     }
 
     @Override
-    public T find(Object keys) {
+    public T find(T keys) {
         List<Criteria> criteriaList = new ArrayList<>();
         forEachValidFields(keys, (k, v)->criteriaList.add(Criteria.where(k).is(v)));
         Criteria criteria = new Criteria().andOperator(criteriaList.toArray(new Criteria[0]));
