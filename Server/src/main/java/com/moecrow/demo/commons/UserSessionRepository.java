@@ -10,18 +10,18 @@ import java.util.*;
  */
 @Component
 public class UserSessionRepository {
-    Set<Object> set = new HashSet<>();
+    Set<String> set = new HashSet<>();
     //todo callback
 
-    public Iterable<Object> all() {
+    public Iterable<String> all() {
         return set;
     }
 
-    public void add(Object key) {
+    public void add(String key) {
         set.add(key);
     }
 
-    public void remove(Object key) {
+    public void remove(String key) {
         set.remove(key);
     }
 }

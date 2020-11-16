@@ -81,6 +81,10 @@ class Main extends eui.Component {
                 console.log(response.body);
             });
 
+            client.subscribe('/user/queue/offline', function (response) {
+                console.log(response.body);
+            });
+
             client.subscribe('/user/queue/errors', function (response) {
                 console.log(response.body);
             });

@@ -34,6 +34,7 @@ public class MyApplicationRunner implements ApplicationRunner {
                     .level(1)
                     .experiences(0)
 
+                    .lastBattle(new Date())
                     .bonus(0)
 
                     .build();

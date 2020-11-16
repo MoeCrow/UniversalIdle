@@ -39,4 +39,6 @@ public class User {
     private Date createdTime;
 
     private Date lastLogin;
+
+    private Date lastBattle;
 }
