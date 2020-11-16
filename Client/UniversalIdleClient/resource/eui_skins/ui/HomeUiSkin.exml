@@ -7,7 +7,7 @@
 	<e:Button label="Button" x="509" y="115"/>
 	<e:Button label="Button" x="187" y="475"/>
 	<e:Button label="Button" x="358" y="475"/>
-	<e:Button label="Button" x="189" y="611"/>
+	<e:Button id="btn_bonus" label="buybonus" x="189" y="611"/>
 	<e:Button label="Button" x="358" y="611"/>
 	<e:Group height="200" bottom="0" left="0" right="0">
 		<e:Button label="Button" x="123" scaleX="1" scaleY="1" bottom="50"/>

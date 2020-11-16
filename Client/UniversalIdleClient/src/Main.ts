@@ -28,6 +28,7 @@
 //////////////////////////////////////////////////////////////////////////////////////
 
 class Main extends eui.Component {
+    public static client: any
 
     protected createChildren(): void {
         super.createChildren();
@@ -70,6 +71,8 @@ class Main extends eui.Component {
         var ws = new egret.WebSocket()
         var url = "ws://127.0.0.1:8080/simple?token=123";
         var client = Stomp.over(new SocketWrap(ws, url))
+        Main.client = client
+        
         ws.connectByUrl(url)
 
         client.connect({}, function (frame) {            
@@ -93,10 +96,6 @@ class Main extends eui.Component {
 
             client.subscribe('/user/queue/battle', function (response) {
                 console.log(response.body);
-            });
-
-            client.subscribe('/shop/buy_some', function (response) {
-                console.log("buy result:", response.body);
             });
 
             setInterval(()=>{
