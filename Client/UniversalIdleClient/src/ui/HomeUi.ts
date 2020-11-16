@@ -11,7 +11,7 @@ class HomeUi extends eui.Component {
         this.percentWidth = 100
 
         this.btn_bonus.addEventListener(egret.TouchEvent.TOUCH_TAP, function() {
-            Main.client.subscribe('/shop/buy_some', function (response) {
+            Main.client.subscribe('/shop/buy_some/1/2', function (response) {
                 console.log("buy result:", response.body);
             });
         }, this)
