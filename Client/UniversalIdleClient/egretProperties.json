@@ -28,6 +28,10 @@
       "name": "promise"
     },
     {
+      "name": "jszip",
+      "path": "./libs/jszip"
+    },
+    {
       "name": "stomp",
       "path": "./libs/stomp"
     }

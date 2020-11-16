@@ -64,6 +64,12 @@ class Main extends eui.Component {
     private async runGame() {
         await this.loadResource()
 
+        //init config
+        GlobalConfig.DecompressZip();
+
+        console.log(GlobalConfig.ins().BaseTemplateConfig)
+        console.log(GlobalConfig.ins().TinyTemplateConfig)
+
         // this.skinName = "MainUiSkin";
         this.addChild(new MainUi());
 
@@ -72,7 +78,7 @@ class Main extends eui.Component {
         var url = "ws://127.0.0.1:8080/simple?token=123";
         var client = Stomp.over(new SocketWrap(ws, url))
         Main.client = client
-        
+
         ws.connectByUrl(url)
 
         client.connect({}, function (frame) {            
