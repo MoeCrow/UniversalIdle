@@ -12,13 +12,13 @@
 		"libs/stomp/stomp.js"
 	],
 	"game": [
-		"bin-debug/core/GlobalConfigDef.js",
+		"bin-debug/core/config/GlobalConfigDef.js",
 		"bin-debug/AssetAdapter.js",
 		"bin-debug/Main.js",
 		"bin-debug/Platform.js",
 		"bin-debug/SocketWrap.js",
 		"bin-debug/ThemeAdapter.js",
-		"bin-debug/core/GlobalConfig.js",
+		"bin-debug/core/config/GlobalConfig.js",
 		"bin-debug/LoadingUI.js",
 		"bin-debug/ui/BattleUi.js",
 		"bin-debug/ui/CharacterUi.js",
