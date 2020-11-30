@@ -1,27 +1,40 @@
 package com.moecrow.demo;
 
 import com.google.gson.Gson;
-import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.moecrow.demo.config.GlobalDataConfig;
-import com.moecrow.demo.config.data.BaseTemplateConfig;
 import com.moecrow.demo.dao.entity.User;
 import com.moecrow.demo.dao.reporitory.UserRepository;
+import com.moecrow.demo.event.ServerStartedEvent;
+import com.moecrow.demo.model.RequestMessage;
 import lombok.extern.java.Log;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
+import org.springframework.context.ApplicationEventPublisher;
+import org.springframework.core.convert.ConversionService;
+import org.springframework.core.convert.TypeDescriptor;
+import org.springframework.core.convert.converter.ConditionalGenericConverter;
+import org.springframework.core.convert.converter.Converter;
+import org.springframework.core.convert.support.GenericConversionService;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.messaging.converter.MappingJackson2MessageConverter;
+import org.springframework.messaging.handler.annotation.support.PayloadArgumentResolver;
+import org.springframework.messaging.simp.annotation.support.SimpAnnotationMethodMessageHandler;
 import org.springframework.stereotype.Component;
 import org.springframework.util.ResourceUtils;
+import org.springframework.web.socket.messaging.WebSocketAnnotationMethodMessageHandler;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.Collections;
 import java.util.Date;
 import java.util.Scanner;
+import java.util.Set;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
@@ -38,11 +51,42 @@ public class MyApplicationRunner implements ApplicationRunner {
     @Autowired
     GlobalDataConfig globalDataConfig;
 
+    @Autowired
+    ApplicationEventPublisher eventPublisher;
+
+    @Autowired
+    SimpAnnotationMethodMessageHandler simpAnnotationMethodMessageHandler;
+
+    class JsonConverter implements ConditionalGenericConverter {
+
+        @Override
+        public boolean matches(TypeDescriptor src, TypeDescriptor dst) {
+            return src.getType().equals(String.class);
+        }
+
+        @Override
+        public Set<ConvertiblePair> getConvertibleTypes() {
+            return null;
+        }
+
+        @Override
+        public Object convert(Object o, TypeDescriptor src, TypeDescriptor targetClass) {
+            return new Gson().fromJson((String) o, targetClass.getType());
+        }
+    }
+
     @Override
     public void run(ApplicationArguments args) throws Exception {
+        GenericConversionService conversionService = (GenericConversionService) simpAnnotationMethodMessageHandler.getConversionService();
+        conversionService.addConverter(new JsonConverter());
+
         try {
             long start = System.currentTimeMillis();
-            File configDir = ResourceUtils.getFile("classpath:config");
+//            ClassPathResource classPathResource = new ClassPathResource("config");
+
+            File configDir = ResourceUtils.getFile("config");
+
+//            File configDir = classPathResource.getFile();
             File[] configFiles = configDir.listFiles();
 
             AtomicInteger countConfig = new AtomicInteger();
@@ -103,5 +147,7 @@ public class MyApplicationRunner implements ApplicationRunner {
 
             userRepository.save(user);
         }
+
+        eventPublisher.publishEvent(new ServerStartedEvent());
     }
 }

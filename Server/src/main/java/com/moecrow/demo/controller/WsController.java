@@ -1,17 +1,20 @@
 package com.moecrow.demo.controller;
 
 import com.moecrow.demo.commons.DateUtils;
+import com.moecrow.demo.commons.UserSession;
 import com.moecrow.demo.commons.UserSessionRepository;
 import com.moecrow.demo.dao.entity.User;
 import com.moecrow.demo.dao.reporitory.UserRepository;
+import com.moecrow.demo.event.ServerStartedEvent;
 import com.moecrow.demo.model.RequestMessage;
 import com.moecrow.demo.model.ResponseMessage;
-import com.moecrow.demo.commons.UserSession;
 import com.moecrow.demo.model.dto.BattleResultMessage;
 import com.moecrow.demo.model.dto.BattleStartMessage;
 import com.moecrow.demo.model.dto.OfflineRewardMessage;
 import lombok.extern.java.Log;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.event.ContextStoppedEvent;
+import org.springframework.context.event.EventListener;
 import org.springframework.messaging.handler.annotation.MessageExceptionHandler;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
@@ -20,6 +23,7 @@ import org.springframework.messaging.simp.annotation.SendToUser;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Controller;
 
+import javax.annotation.PreDestroy;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -41,6 +45,11 @@ public class WsController {
 
     @Autowired
     UserRepository userRepository;
+
+    @EventListener
+    public void started(ServerStartedEvent event) {
+        log.info("Server started!");
+    }
 
     @MessageExceptionHandler(Exception.class)
     @SendToUser("/queue/errors")
